@@ -200,3 +200,18 @@ s.page .right article pre code {
   max-width: 100%;
 }
 
+.author {
+  position: absolute;
+  color: gray;
+  left: 3vw;
+  top: 3vh;
+  opacity: 0.1;
+  font-size: clamp(2rem, 10vw, 8rem);
+  font-weight: bold;
+  user-select: none;
+  text-decoration: none;
+}
+
+.author:hover {
+  opacity: 0.3;
+}
