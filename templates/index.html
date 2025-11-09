@@ -1,56 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero">
-    <div class="author">
-        <div class="avatar"></div>
-        <div class="meta">
-            <span class="name">ZELJKO VRANJES</span>
-            <span class="sub">PERSONAL BLOG</span>
-        </div>
-    </div>
-    <div class="links">
-        {% include "partial/social/github.html" %}
-        {% include "partial/social/npm.html" %}
-    </div>
-</section>
-<section class="about">
-  <article>
-    <div class="title">ABOUT</div>
-    <div class="content">
-      I'm a <span id="age"></span> year old with a strong passion for software development and investing. 
-      I enjoy writing clean, simple code and occasionally explore reverse engineering. I also dabble 
-      in design from time to time. <a href="https://drive.proton.me/urls/A5A64XYHW0#S0CHyItm66Q4">resume</a>.
-    </div>
-  </article>
-  <article>
-    <div class="title">PROJECTS</div>
-    <div id="projects" class="content"></div>
-  </article>
-</section>
-<section class="content">
-<div class="title blog singleton" style="padding-left: 5px;padding-bottom: 4px;"><a href="/blog/">LATEST ENTRIES&nbsp;↪</a></div>
+<div class="container-left">
+  <div class="branding">
+    P E R S O N A L&nbsp;&nbsp; B L O G
+  </div>
+  <div class="branding-line"></div>
+</div>
 {% set blog_section = get_section(path="blog/_index.md") %}
-{% set post_count = 0 %}
-{% for post in blog_section.pages %}
-  {% if post.slug != "investment-income" and post_count < 3 %}
-    <article class="index" onclick="window.location='{{ post.permalink }}'" style="cursor: pointer;">
-      <span class="title">{{ post.title }}</span>
-      <span class="date">
-        <span class="view-count" data-slug="{{ post.slug }}">0</span> views • {{ post.date | date(format="%B, %-d, %Y") }}
-      </span>
-    </article>
-    {% set_global post_count = post_count + 1 %}
-  {% endif %}
-{% endfor %}
-</section>
-<section class="contact">
-  <article>
-    <div class="title">CONTACT</div>
-    <div class="content">
-      If you need to reach out to me send me an email at <a href="mailto:hello@zeljko.me">hello@zeljko.me</a>.
-    </div>
-  </article>
-</section>
+
+{# Grab up to 10 posts, excluding "investment-income" #}
+{% set visible_posts = blog_section.pages
+    | filter(attribute="slug", op="!=")
+    | slice(end=10)
+%}
+
+{# Build container classes conditionally #}
+{% set container_classes = "container-right" %}
+{% if visible_posts | length < 10 %}
+  {% set container_classes = container_classes ~ " few-posts" %}
+{% endif %}
+
+<div class="{{ container_classes }}">
+  <div class="section">
+    {% for post in visible_posts %}
+      <div class="post" onclick="window.location='{{ post.permalink }}'" style="cursor: pointer;">
+        <div class="title">{{ post.title }}</div>
+        <span class="date">
+          <span class="view-count" data-slug="{{ post.slug }}">0</span>
+          views • {{ post.date | date(format="%B, %-d, %Y") }}
+        </span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% include "partial/script/projects.html" %}
 {% include "partial/script/age.html" %}
 {% endblock content %}

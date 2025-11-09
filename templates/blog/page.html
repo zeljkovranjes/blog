@@ -1,18 +1,17 @@
 {% extends "base.html" %} {% block content %}
-<section class="hero">
-  <div class="page">
-    <div class="meta">
-      <a href="/blog" class="name">↩&nbsp;PAGE</a>
-      <div style="display: flex; flex-direction: column;gap:3px;">
-        <a class="title">{{ page.title }}</a>
-        <div class="date">
-          <span class="view-count" data-slug="{{ page.slug }}">0</span> views • {{ page.date | date(format="%B, %-d, %Y") }}
-        </div>
+
+<div class="page">
+  <div class="left">
+    <a href="/blog" class="go-back">↲ BACK</a>
+  </div>
+  <div class="right">
+    <div class="page-group">
+      <a class="title">{{ page.title }}</a>
+      <div class="date">
+        <span class="view-count" data-slug="{{ page.slug }}">0</span> views • {{ page.date | date(format="%B, %-d, %Y") }}
       </div>
     </div>
+    <article>{{ page.content | safe }}</article>
   </div>
-</section>
-<section class="content">
-  <article class="page">{{ page.content | safe }}</article>
-</section>
+</div>
 {% endblock content %}

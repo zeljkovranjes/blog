@@ -1,44 +1,41 @@
-{% extends "base.html" %} 
-{% block content %} {% include "partial/base/header.html" %}
-<section class="hero">
-  <div class="entries">
-    <div class="meta">
-      <a href="/" class="name">↩&nbsp;ENTRIES</a>
-    </div>
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="left">
+    <a href="/" class="go-back">↲ ENTRIES</a>
   </div>
-</section>
-<section class="search">
-  <input type="text" id="searchInput" placeholder="search entries..." autocomplete="off">
-</section>
-<section class="content" id="articlesList">
-  {% for page in section.pages %}
-  {% if page.slug != "investment-income" %}
-    <article class="index"
-      onclick="window.location='{{ page.permalink | safe }}'"
-      style="cursor: pointer"
-      data-title="{{ page.title | lower }}"
-      data-permalink="{{ page.permalink | safe }}">
-      <span class="title">{{ page.title }}</span>
-      <span class="date">{{ page.date | date(format="%B, %-d, %Y") }}</span>
-    </article>
-  {% endif %}
-  {% endfor %}
-</section>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const searchInput = document.getElementById('searchInput');
-  const articles = document.querySelectorAll('.index');
-  searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-    articles.forEach(function(article) {
-      const title = article.getAttribute('data-title');
-      if (title.includes(query) || query === '') {
-        article.style.display = 'flex';
-      } else {
-        article.style.display = 'none';
-      }
-    });
-  });
-});
-</script>
+
+  <div class="right">
+
+
+{% set blog_section = get_section(path="blog/_index.md") %}
+
+{# Use all posts from the blog section #}
+{% set visible_posts = blog_section.pages %}
+
+{# Build container classes conditionally #}
+{% set container_classes = "container-right" %}
+{% if visible_posts | length < 10 %}
+  {% set container_classes = container_classes ~ " few-posts" %}
+{% endif %}
+
+<div class="{{ container_classes }}">
+  <div class="section">
+    {% for post in visible_posts %}
+      {% if post.slug != "investment-income" %}
+        <div class="post" onclick="window.location='{{ post.permalink }}'" style="cursor: pointer;">
+          <div class="title">{{ post.title }}</div>
+          <span class="date">
+            <span class="view-count" data-slug="{{ post.slug }}">0</span>
+            views • {{ post.date | date(format="%B, %-d, %Y") }}
+          </span>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+</div>
+</div>
+{% include "partial/script/projects.html" %}
+{% include "partial/script/age.html" %}
 {% endblock content %}
