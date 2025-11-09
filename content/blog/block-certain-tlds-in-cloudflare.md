@@ -6,6 +6,7 @@ date = 2025-05-25
 This guide shows you how to create a Cloudflare security rule that blocks traffic from commonly abused domain extensions.
 
 **What you'll need:**
+
 - Cloudflare account with your domain configured
 - Access to your Cloudflare dashboard
 
