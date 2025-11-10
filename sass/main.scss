@@ -128,7 +128,9 @@ main {
 }
 
 a {
-  all: unset;
+  font-family: "Roboto Mono", monospace;
+  text-decoration: none;
+  color: black;
   cursor: pointer;
 }
 
