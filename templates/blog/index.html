@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="page">
-  <div class="left">
-    <a href="/" class="go-back">↲ ENTRIES</a>
+
+<a href="/" class="go-back" style="position: absolute;top: 0;left: 0;  color: black;
+;text-decoration: none;padding: 15px;  font-family: 'Roboto Mono', monospace;">↲ ENTRIES</a>
+
+<div class="container-left">
+  <div class="branding">
+    E N T R I&nbsp;&nbsp;E S
   </div>
-
-  <div class="right">
-
+  <div class="branding-line"></div>
+</div>
 
 {% set blog_section = get_section(path="blog/_index.md") %}
 
@@ -34,8 +37,7 @@
     {% endfor %}
   </div>
 </div>
-</div>
-</div>
+
 {% include "partial/script/projects.html" %}
 {% include "partial/script/age.html" %}
 {% endblock content %}
