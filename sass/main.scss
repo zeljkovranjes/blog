@@ -127,6 +127,11 @@ main {
  
 }
 
+a {
+  all: unset;
+  cursor: pointer;
+}
+
 .page .left .go-back {
   font-family: "Roboto Mono", monospace;
   text-decoration: none;
